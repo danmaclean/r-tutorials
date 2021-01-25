@@ -1,0 +1,76 @@
+---
+title: "Linear Models"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+gradethis_setup()
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Null Models
+
+A Null Model is an important aspect of any statistical exercise, even if we don't explictly choose it, we will at least do so implicitly by choosing a statistical test. 
+
+```{r null-models-1}
+question(
+  "Which of these is the best definition of a Null Model?",
+  answer("An idealised version of the situation in which there are no statistical differences between samples", 
+         correct = TRUE, 
+         message="The Null Model can be thought of in simplistic terms as a situation where there isn't any difference"), 
+  answer("An empty version of the model we are building with no real data in it",
+         message="The Null Model isn't empty - it doesn't contain data from our experiment, but it does contain an idealised version of data similar to that in the experiment"), 
+  answer("A base case against which we can measure the size of our hypothesised difference",
+         message="The Null Model doesn't tell us anything about the size of the difference we observe, but it does tell us about the frequency we would see the difference appear by chance if we ran the Null Model many times.")
+)
+```
+
+```{r null-models-2}
+question(
+  "The value of the Null Model is that...",
+  answer("We can use it to guess the probability of our hypothesis being correct", message="We never know the probability that our hypothesis is correct, only the frequency that our observed difference happens by chance."),
+  answer("We can use it to tell how often our observed difference happens by chance in an idealised situation.", correct=TRUE, message="We only ever know the frequency with which the difference occurs in our Null Model and make inferences from that."),
+  answer("It gives us the $p$-value which will tell us whether our experiment is significant or not.", message="The Null Model does _help_ to generate a $p$-value when used in a test of some kind but it never tells us whether our experiment or the data are significant, we only ever know the frequency with which the difference we observed occurs by chance. We make inferences from that.")
+)
+```
+
+## $p$-values
+
+$p$-values are one of the most misunderstood and misused values in science. What do you think about the following statements
+
+```{r p-values-1}
+question("$p$-values are frequently misinterpreted.",
+  answer("True", correct = TRUE,
+         message="$p$-values are probably the most misinterpreted number in science."),
+  answer("False", 
+         message="$p$-values are probably the most misinterpreted number in science.")
+)
+```
+
+```{r p-values-2}
+question("$p$-values tell us how likely our hypothesis is to be true.",
+  answer("True", 
+         message="This is the major and most damaging way in which $p$-values get misinterpreted. A $p$-value is a frequency, not a probability of truth or a measure of experimental goodness."),
+  answer("False", correct=TRUE)   
+         )
+```
+
+```{r p-values-3}
+question("A $p$-value of 0.05 is a gold standard that means I have got a solid result that _must_ be correct.",
+  answer("True", message="0.05 is an arbitrarily chosen value. It means that our observation occurs only 1 time in 20 repeat runs of our Null Model. Which means that in 1 in 20 times the result happens by chance, even when there is no actual difference."),
+  answer("False", correct=TRUE, message="0.05 is an arbitrarily chosen value that only reflects we have decided that we are happy to live with detecting a difference incorrectly 1 in every 20 times, on average. ")
+)
+```
+
+```{r p-values-4}
+question(
+  "A $p$-value of 0.01 is inherently and at all times better than a $p$-value of 0.05",
+  answer("True", 
+         message="The precise value of $p$ you should choose as a threshold should depend on the number of times you can live with being wrong. Sometimes that will be more, sometimes less."),
+  answer("False", correct = TRUE,
+         message="The precise value of $p$ you should choose as a threshold should depend on the number of times you can live with being wrong. Sometimes that will be more, sometimes less.")
+)
+```

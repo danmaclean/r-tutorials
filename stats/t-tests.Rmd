@@ -1,0 +1,132 @@
+---
+title: "t-tests"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(palmerpenguins)
+library(dplyr)
+library(magrittr)
+gradethis_setup()
+knitr::opts_chunk$set(echo = FALSE)
+
+penguins_small <- select(penguins, species, bill_length_mm) %>% 
+  filter(species %in% c('Adelie','Chinstrap')) %>% 
+  droplevels()
+```
+
+
+We've seen how ths slope and it's gradient and the statistics generated in a linear model can give us a test for differences that is the same as a $t$-test. Let's use the `penguins` data set to examine some differences in bill size in some penguins.
+
+## Examining the data
+
+Examine the provided data `penguins_small`, use `str()`
+
+```{r, penguins-1, exercise=TRUE}
+
+```
+
+```{r, penguins-1-solution}
+str(penguins_small)
+```
+
+```{r, penguins-1-check}
+grade_code()
+```
+
+```{r, penguins-2}
+question("How many experimental groups are there?",
+         answer("1", message="Two-sample $t$-tests need two groups."),
+         answer("2", correct=TRUE,message="Two-sample $t$-tests need two groups."),
+         answer("3", message="Two-sample $t$-tests need two groups.")
+)
+```
+
+Get a summary of the data per group by modifying the code below
+```{r, penguins-3, exercise=TRUE}
+penguins_small %>% 
+  group_by() %>% 
+  summarize(mean_bill_length = mean(bill_length_mm),
+            sd_bill_length = sd(bill_length_mm)
+            )
+```
+```{r, penguins-3-solution}
+penguins_small %>% 
+  group_by(species) %>% 
+  summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
+            sd_bill_length = sd(bill_length_mm, na.rm = TRUE)
+  )
+```
+```{r, penguins-3-check}
+grade_code(glue_incorrect="Remember to group by the right column, and to remove NA values (na.rm=TRUE) in summary functions.")
+
+```
+
+## $t$-tests
+
+Build a linear model suitable for the `penguins_small` data set. Generate a summary.
+
+```{r, penguins-4, exercise=TRUE}
+model <- lm()
+```
+```{r, penguins-4-solution}
+model <- lm(bill_length_mm ~ species, data = penguins_small)
+summary(model)
+```
+```{r, penguins-4-check}
+grade_code()
+```
+
+Recall that the $F$ statistic indicates the strength of relationship between the $x$ and $y$, in other words the size of and fit to the slope, which together indicates a real difference between the groups.
+
+```{r, penguins-5}
+question(
+  "What is the $F$ statistic between these groups?",
+  answer("566.5", correct=TRUE),
+  answer("38.7914"),
+  answer("10.0424")
+)
+```
+
+```{r, penguins-6}
+question(
+  "Is this value a strong $F$ value? Which of these statements is most true?",
+  answer("It is low, there isn't evidence of differences.",message="Remember $F$ is a ratio, moving above 1 indicates a relationship. this $F$ value is quite a long way over 1."),
+  answer("It is moderate, there is some relationship and some difference between the groups.", message="Remember $F$ is a ratio, moving above 1 indicates a relationship. this $F$ value is quite a long way over 1."),
+  answer("Yes, there is a good relationship and likely a real difference", correct=TRUE)
+)
+```
+
+Remember that the coefficient tells us about the change in $y$ per unit increase in $x$. In our two group situation we set things up so that the distance on the $x$-axis between groups is 1. 
+
+```{r, penguins-8}
+question(
+  "What is the size difference between the bills of the two penguin types?",
+  answer("Chinstrap is bigger than Adelie by 10.0424 cm", message="Check your units"),
+  answer("Adelie is bigger than Chinstrap by 38.7914 mm"),
+  answer("Adelie is smaller than Chinstrap by 10.0424 mm", correct=TRUE),
+ answer("Adelie is smaller than Chinstrap by 38.7914 mm")
+  )
+```
+
+
+```{r, penguins-9}
+question(
+  "What is the $p$-value for the likelihood that the difference of the size observed occurs at chance in a Null Model?",
+  answer("$<2.2 x 10^{-6}$", correct=TRUE),
+  answer("0.723"),
+  answer("0.728")
+)
+```
+
+```{r, penguins-10}
+question(
+  "Is this value significant?",
+  answer("YES!", message="Actually, it can't be! We hadn't defined a significance level. A $p$-value can only be said to be significant when compared to a predecided level at which we are prepared to accept mistakes (e.g 0.05 for 1 in 20 miscalls). Fixing this level  _after_ seeing the $p$-value isn't right "),
+  answer("No.", message="Right, but not because of the value. It's because we hadn't defined a significance level. A $p$-value can only be said to be significant when compared to a predecided level at which we are prepared to accept mistakes (e.g 0.05 for 1 in 20 miscalls). Fixing this level  _after_ seeing the $p$-value isn't right"),
+  answer("Yes, but no.", correct=TRUE, message="This $p$-value would be significant at $0.05$, but we didn't specifiy the significance level before hand, so we don't get it quite right. A $p$-value can only be said to be significant when compared to a predecided level at which we are prepared to accept mistakes (e.g 0.05 for 1 in 20 miscalls). Fixing this level  _after_ seeing the $p$-value isn't right" )
+)
+```

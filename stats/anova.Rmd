@@ -1,0 +1,246 @@
+---
+title: "ANOVA"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(palmerpenguins)
+library(dplyr)
+library(magrittr)
+library(multcomp)
+gradethis_setup()
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+
+```{r prepare-anova }
+model <- lm(body_mass_g ~ species + island + sex + year, data=penguins)
+
+int_df <- function(n=3){
+set.seed("23456")
+df1 <- data.frame(compost = rep("john_innes_1", n), supplement = rep("formula1", n), dry_weight = rnorm(n, 45, 10) )
+df2 <- data.frame(compost = rep("john_innes_1", n), supplement = rep("formula2", n), dry_weight =  rnorm(n, 30, 8) )
+
+df3 <- data.frame(compost = rep("john_innes_2", n), supplement = rep("formula1",n), dry_weight = rnorm(n, 30, 8))
+df4 <- data.frame(compost = rep("john_innes_2", n), supplement = rep("formula2", n), dry_weight = rnorm(n, 45, 8))
+df <- dplyr::bind_rows(list(df1,df2,df3,df4))
+df$compost <- factor(df$compost, levels = c("john_innes_2", "john_innes_1"))
+df$supplement <- factor(df$supplement, levels = c("formula1", "formula2"))
+return(df)
+}
+plant_weight <- int_df()
+
+library(dplyr)
+plant_weight_int <- dplyr::mutate(plant_weight, compost_supplement = interaction(compost,supplement))
+
+spec_int_model <- lm(dry_weight ~ compost_supplement, data=plant_weight_int)
+
+```
+
+## Multi ANOVA
+
+Inspect the data `penguins`
+
+```{r, anova-penguins-x, exercise=TRUE, exercise.setup="prepare-anova"}
+summary(...)
+```
+```{r, anova-penguins-x-solution}
+summary(penguins)
+```
+```{r, anova-penguins-x-check}
+grade_code()
+```
+
+```{r, anova-penguins-0}
+question(
+  "Which are the response variables in these data?",
+  answer("species"),
+  answer("island"),
+  answer("bill_length_mm",correct=TRUE),
+  answer("bill_depth_mm",correct=TRUE),
+  answer("flipper_length_mm",correct=TRUE),
+  answer("body_mass_g",correct=TRUE),
+  answer("sex"),
+  answer("year")
+)
+```
+
+Make the model to predict the `body_mass_g` from the explanatory variables. Recall that in the linear model an extra variable is added with `+`, and that's how its done in R e.g. `lm(y ~ x_1 + x_2 + x_3)`. Inspect your model.
+
+```{r, anova-penguins-1, exercise=TRUE, exercise.setup="prepare-anova"}
+model <- lm(...  ~ ... + ... + ... + ..., data=penguins)
+summary( ... )
+```
+
+```{r, anova-penguins-1-solution}
+model <- lm(body_mass_g ~ species + island + sex + year, data=penguins)
+summary(model)
+```
+
+```{r, anova-penguins-2}
+question(
+  "Which of the other variables are having an effect on the body mass?",
+  answer("species", correct=TRUE),
+  answer("island"),
+  answer("sex", correct=TRUE),
+  answer("year")
+)
+```
+
+Complete the code below to explicitly test the hypothesis that the true difference in mass between Gentoos and Chinstraps is 0 g.
+
+```{r, anova-penguins-3, exercise=TRUE, exercise.setup="prepare-anova"}
+library(multcomp)
+tested <- glht(model, ... )
+summary(tested)
+```
+
+```{r, anova-penguins-3-solution}
+library(multcomp)
+tested <- glht(model, linfct=mcp(species="Tukey"))
+summary(tested)
+```
+
+```{r, anova-penguins-3-check}
+grade_code()
+```
+
+## Interactions between variables
+
+Interactions between variables can cause misleading models, we need to check for those when we have multiple variables and use an interaction model if needed. Let's look at running a non-interaction model on some data then inspecting it to find potential interactions.
+
+Inspect the `plant_weight` data frame
+
+```{r, anova-interactions-1, exercise=TRUE, exercise.setup="prepare-anova"}
+
+```
+```{r,anova-interactions-1-solution}
+summary(plant_weight)
+```
+```{r,anova-interactions-1-check}
+grade_code()
+```
+
+Run the code below to see the data plotted
+
+```{r, anova-interactions-2, exercise=TRUE, exercise.setup="prepare-anova"}
+library(ggplot2)
+ggplot(plant_weight) + aes(compost, dry_weight) + geom_jitter(aes(colour=supplement))
+```
+
+Now run a model to inspect the main effects of `compost` and `supplement` on `dry_weight`. Inspect the result and answer the questions
+
+```{r, anova-interactions-3, exercise=TRUE, exercise.setup="prepare-anova"}
+imodel <- 
+```
+```{r, anova-interactions-3-solution}
+imodel <- lm(formula = dry_weight ~ compost + supplement + compost, data = plant_weight)
+summary(imodel)
+```
+```{r, anova-interactions-3-check}
+grade_code()
+```
+
+```{r, anova-interactions-4}
+question(
+  "Are there any significant variables in `imodel` ?",
+  answer("No."),
+  answer("Yes."),
+  answer("No, but I thought there would be from the first plot.", correct=TRUE)
+)
+```
+
+
+We can use an interaction plot to spot any interactions between the variables in the `compost` data. When the lines are not parallel in these plots we have a suggestion that the variables are interacting.
+
+This is fiddly to do, one way is to use the `interaction.plot` function on all pairs of variables. `interaction.plot()` only accepts single columns not whole data frames so we need to use `$` syntax to specify each variable column. Replace `var` with the real variables
+
+```{r, anova-interactions-5, exercise=TRUE, exercise.setup="prepare-anova"}
+interaction.plot(plant_weight$var1, plant_weight$var2, plant_weight$response_var)
+```
+
+```{r, anova-interactions-5-solution}
+interaction.plot(plant_weight$compost, plant_weight$supplement, plant_weight$dry_weight )
+```
+```{r anova-interactions-5-check}
+grade_code()
+```
+
+```{r, anova-interactions-6}
+question("Does the pattern suggest an interaction?",
+         answer("Yes.", correct=TRUE, message="Lines that cross are indicative of an interaction, but not conclusive. You'd still need to do a hypothesis test to confirm."),
+         answer("No.", message="Lines that cross are indicative of an interaction, but not conclusive. You'd still need to do a hypothesis test to confirm.")
+         )
+```
+
+Make an interaction model of `dry_weight` and the explanatory variables. Use explicit interaction terms with the other variables using the `:` to specify the interaction. You should keep the main terms in the model as well as the interactions. Inspect the model.
+
+```{r, anova-interactions-7, exercise=TRUE, exercise.setup="prepare-anova"}
+int_model <- lm(... ~ ... + ... + ...:... , data=...)
+
+```
+```{r, anova-interactions-7-solution}
+int_model <- lm(dry_weight ~ compost + supplement + compost:supplement, data=plant_weight)
+summary(int_model)
+```
+From the summary we can see a significant interaction. But we also see that the main effects appear to be significant. This is quite confusing, but recall that the main effects can't be used if the interaction is significant. 
+
+```{r, anova-interactions-8}
+question(
+  "Which is the best interpretation of the interaction model summary?",
+  answer("Compost type or Formula type have an effect on the dry weight.",
+         message="The main effects alone don't generalise if there is a significant interaction term."),
+  answer("The mixture of Compost type and Formula type is important in combination only. ", correct = TRUE, message="Note that this doesn't say which combination though!")
+)
+```
+
+
+The summary only shows us that there is an interaction. It isn't fully informative on it's own and we need to test the specific hypothesis suggested by the model.
+
+```{r, anova-interactions-9}
+question("Amongst others, which of these hypotheses would we be testing?",
+         answer("The difference in dry weight between plants grown with John Innes 1 and Formula 1 and John Innes 2 and Formula 1 is zero", correct=TRUE),
+        answer("Plants grown in John Innes 1 and Formula 1 are heavier than John Innes 2 and Formula 1", message="We only get the likelihood that the difference is zero according to the Null Model, not whether one is greater than another"),
+        answer("The difference in dry weight between plant grown with John Innes 1 and Formula 1 and John Innes 1 and Formula 2 is zero", correct = TRUE),
+        answer("Plants grown in John Innes 1 and Formula 1 are heavier than John Innes 1 and Formula 2", message="We only get the likelihood that the difference is zero according to the Null Model, not whether one is greater than another")
+         )
+```
+
+It is often easier to test all the interactions at once. We can do that by adding a specific interaction column to our data and modelling that. Use the `interaction` function to add a column called `compost_supplement` to a new dataframe and build the interaction model on the new column. Carry out Tukey's post hoc test.
+
+```{r, anova-interactions-10, exercise=TRUE, exercise.setup="prepare-anova"}
+library(dplyr)
+plant_weight_int <- plant_weight %>%  mutate(... = interaction(...,...))
+
+spec_int_model <- lm(... ~ ..., data=...)
+
+library(multcomp)
+summary(glht(..., linfct=mcp(... = "Tukey")))
+```
+```{r, anova-interactions-10-solution}
+library(dplyr)
+plant_weight_int <- plant_weight %>%  mutate(compost_supplement = interaction(compost,supplement))
+
+spec_int_model <- lm(dry_weight ~ compost_supplement, data=plant_weight_int)
+
+library(multcomp)
+summary(glht(spec_int_model, linfct=mcp(compost_supplement = "Tukey")))
+```
+```{r, anova-interactions-10-check}
+grade_code()
+```
+
+Examine the hypothesis test results above and answer the question below.
+
+```{r, anova-interactions-11}
+question("Which is the best combination for maximising plant dry weight?",
+         answer("John Innes 1, Formula 1", correct=TRUE),
+         answer("John Innes 1, Formula 2"),
+         answer("John Innes 2, Formula 1"),
+         answer("John Innes 2, Formula 2")
+         )
+```

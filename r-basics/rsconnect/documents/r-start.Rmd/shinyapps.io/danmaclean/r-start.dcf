@@ -1,0 +1,12 @@
+name: r-start
+title: r-start
+username:
+account: danmaclean
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3476300
+bundleId: 4099648
+url: https://danmaclean.shinyapps.io/r-start/
+when: 1610710841.26434
+asMultiple: FALSE
+asStatic: FALSE

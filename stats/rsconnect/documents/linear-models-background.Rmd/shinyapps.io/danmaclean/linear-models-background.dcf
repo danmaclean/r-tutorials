@@ -1,0 +1,13 @@
+name: linear-models-background
+title: linear-models-background
+username:
+account: danmaclean
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3484111
+bundleId: 4111653
+url: https://danmaclean.shinyapps.io/linear-models-background/
+when: 1610965090.04753
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: t-tests.Rmd

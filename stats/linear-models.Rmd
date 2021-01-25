@@ -1,0 +1,242 @@
+---
+title: "Linear Models"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+gradethis_setup()
+knitr::opts_chunk$set(echo = FALSE)
+
+library(ggplot2)
+
+linfunc <- function(x,a,b) {
+  (x * a) + b
+}
+
+
+its_axplusb_time <- function(
+  xrange = c(-4,4),
+  yrange = NULL,
+  a=1,
+  b=0
+  ) {
+  p <- ggplot2::ggplot(data.frame(x=xrange)) +
+    ggplot2::aes(x = xrange) +
+    ggplot2::stat_function(
+      fun = linfunc,
+      args = list(a,b)
+    ) +
+    ggplot2::theme_minimal() +
+    ggplot2::xlim(xrange) +
+    ggplot2::xlab("x") +
+    ggplot2::geom_vline(xintercept = 0, linetype = "dotted") +
+    ggplot2::geom_hline(yintercept = 0, linetype = "dotted")
+
+  if (!is.null(yrange)){
+    p <- p + ggplot2::ylim(yrange)
+  }
+  return(p)
+}
+
+its_random_xy_time <- function(n, min = 5, max = 15, mult = 2, random_mean = 0, random_sd = 1, seed = "456" ) {
+  set.seed(seed)
+  tibble::tibble(
+     x = runif(n, min, max),
+     y = x * mult + rnorm(n, random_mean, random_sd )
+  )
+}
+
+
+its_plot_xy_time <- function(df, line = FALSE, residuals = FALSE) {
+  p <- ggplot2::ggplot(df) +
+    ggplot2::aes(x,y) +
+    ggplot2::geom_point() +
+    ggplot2::theme_minimal()
+  if (line){
+    p <- p + ggplot2::geom_smooth(method = "lm", formula = y ~ x, se = FALSE, linetype = "dashed", colour = "dodgerblue")
+  }
+  if (residuals){
+    model <- lm(y ~ x, data=df)
+    res_data <- tibble::tibble(
+      x = df$x,
+      y = df$y,
+      residual = predict(model)
+    )
+    p <- p + ggplot2::geom_segment(ggplot2::aes(x = x, y = y, xend = x, yend = residual), data = res_data)
+  }
+  p
+}
+
+modp <- function(m){
+  pf(summary(m)$fstatistic[1],summary(m)$fstatistic[2],summary(m)$fstatistic[3],lower.tail=FALSE)
+}
+```
+
+## Straight Lines
+
+```{r, straight-lines-1}
+question(
+  "In $y = ax + b$, the number represented by $a$ is known as what?",
+  answer("The multiplier of $x$",
+         message="Nearly! It _does_ multiply $x$ but it is named the 'coefficient' "),
+  answer("The factor of $x$",
+         message="$a$ is the 'coefficient', not the factor."),
+  answer("The coefficient of $x$",
+         correct=TRUE
+         )
+)
+```
+
+```{r, straight-lines-2}
+question(
+  "In $y = ax + b$, the number represented by $b$ is known as what?",
+  answer("The increaser of $y$",
+         message="Nearly! It _does_  increase the value of $y$ but it is named the 'intercept', as it adjusts the place the $y$ axis is intercepted."),
+  answer("The factor of $x$",
+         message="$b$ is the 'intercept', not the factor. It adjusts the place the $y$ axis is intercepted."),
+  answer("The intercept",
+         correct=TRUE
+         )
+)
+```
+
+Use the slider to examine the role of $a$, the coefficient of $x$ in the line formula and answer the questions
+
+```{r, echo=FALSE}
+sliderInput("a", "value of a, the coefficient of x", 1, min= -5, max=5, step=0.25)
+plotOutput("straightline_a")
+```
+
+```{r, context="server"}
+output$straightline_a <- renderPlot({
+    its_axplusb_time(xrange = c(-5,5), a=input$a, b=0, yrange=c(-5,5))
+  
+})
+```
+
+```{r, straight-lines-3}
+question(
+  "As the coefficient reaches zero, the slope of the line ",
+  answer("gets steeper"),
+  answer("gets flatter", correct=TRUE),
+  answer("goes negative")
+)
+
+```
+
+
+Use the slider to examine the role of $b$, the intercept of $y$ in the line formula and answer the questions
+
+```{r, echo=FALSE}
+sliderInput("b", "value of b, the intercept of y", 1, min= -5, max=5, step=0.25)
+plotOutput("straightline_b")
+```
+
+```{r, context="server"}
+output$straightline_b <- renderPlot({
+    its_axplusb_time(xrange = c(-5,5), b=input$b, a=1, yrange=c(-5,5))
+  
+})
+```
+
+```{r, straight-lines-4}
+question(
+  "changing $b$ changes the place the line hits the $y$ axis but nothing else",
+  answer("True", correct=TRUE),
+  answer("False")
+)
+
+```
+
+## Linear Models
+
+Linear models try to create a linear equation from data. The quality of the model and its usefulness depends on the fit of the model to the data. Examine the relationship between fit and data and coefficient and answer the questions
+
+```{r, echo=FALSE}
+sliderInput("coef", "Coefficient (a) of x", 2, min=-10, max=10, step=0.5)
+sliderInput("sd", "Amount of random noise (experimental variability) in the data", 2, min = 0, max=20, step=0.5)
+
+plotOutput("linearmodel_var")
+tableOutput("linear_stats")
+```
+
+```{r, context="server"}
+
+      df <- reactive( {its_random_xy_time(20, min=5, max=15, mult = input$coef, random_sd=input$sd)})
+    
+    m <- reactive({ lm(y ~ x, data= df() ) })
+    r <- reactive({ summary(m())$adj.r.squared})
+    f <- reactive({ summary(m())$fstatistic['value'] })
+    p <- reactive({ modp(m())})
+    
+    outtable <- reactive({
+      data.frame(
+        Statistic = c("adj.r.squared", "F", "p"),
+        Value = c( r(), f(), p())
+      )
+    })
+
+output$linearmodel_var <- renderPlot(
+  {
+    its_plot_xy_time( df(), line = TRUE, residuals = TRUE)
+  }
+)
+
+output$linear_stats <- renderTable({outtable() })
+
+```
+
+```{r, linear-models-1}
+question(
+  "Increasing noise has what effect on the fit of the model to the data?",
+  answer("The fit gets better"),
+  answer("The fit gets worse", correct=TRUE)
+)
+```
+
+```{r, linear-models-2}
+question(
+  "This is true for any coefficient...",
+  answer("False"),
+  answer("True", correct=TRUE)
+)
+```
+
+```{r, linear-models-3}
+question(
+  "When noise increases (for a fixed coefficient)",
+  answer("$p$ goes up, adjusted $r^2$ goes down, $F$ goes down", correct=TRUE),
+  answer("$p$ goes down, adjusted $r^2$ goes up, $F$ goes up" ),
+  answer("$p$ goes down, adjusted $r^2$ goes down, $F$ goes up"),
+  answer("$p$ goes up, adjusted $r^2$ goes up, $F$ goes up")
+)
+```
+
+```{r, linear-models-4}
+question(
+  "When coefficient increases (for a fixed amount of noise)",
+  answer("$p$ goes up, adjusted $r^2$ goes down, $F$ goes down"),
+  answer("$p$ goes down, adjusted $r^2$ goes up, $F$ goes up",correct=TRUE ),
+  answer("$p$ goes down, adjusted $r^2$ goes down, $F$ goes up"),
+  answer("$p$ goes up, adjusted $r^2$ goes up, $F$ goes up")
+)
+```
+
+```{r, linear-models-5}
+question(
+  "When the coefficient is zero, what should happen to $x$?",
+  answer("$x$ should evaluate to zero.", correct=TRUE, message="$x$ is multiplied by the coefficient, so $ax$ should work out to zero and effectively disappear"),
+  answer("$x$ should stay unchanged", message="$x$ is multiplied by the coefficient, so $ax$ should work out to zero and effectively disappear")
+)
+```
+
+```{r, linear-models-6}
+question(
+  "Why doesn't the line behave as expected when you set $a$ to zero?",
+  answer("$a$ must be being altered to stop the program breaking.", message="The $ax$ part is worked out first, and then experimental noise is added. If $ax + \t{noise}$ is zero then the single point would dissappear."),
+  answer("The $ax$ part is worked out first, and then experimental noise is added, so the final value for each point is rarely actually zero.", correct=TRUE, message="If $ax + \t{noise}$ is zero then the single point would dissappear.")
+)
+```
