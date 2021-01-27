@@ -1,0 +1,80 @@
+---
+title: "Chi-Squared Tests"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(dplyr)
+gradethis_setup()
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+```{r prep-data}
+titanic <- as.data.frame(Titanic) %>% 
+  dplyr::filter( Age == "Adult") %>% 
+  droplevels() %>% 
+  select(Class, Sex, Freq)
+
+tab_titanic <- xtabs(Freq ~ Class + Sex, data = titanic)
+
+```
+
+When we get to a situation with non-continuous $x$ (explanatory) and $y$ (response) variables we move to the $\chi^2$ test instead of doing linear models. 
+
+Here we shall examine a data frame that reports survival of passengers on the ill-fated ship Titanic, it is called `titanic` 
+
+View the data frame.
+
+```{r, chi-0, exercise=TRUE, exercise.setup="prep-data"}
+
+```
+```{r, chi-0-solution}
+titanic
+```
+```{r, chi-0-check}
+grade_code()
+```
+
+```{r, chi-1}
+question(
+  "Which variable holds the count of survivors?",
+  answer("Sex"),
+  answer("Class"),
+  answer("Freq", correct=TRUE)
+)
+```
+
+To use the data frame in a $\chi^2$-test we must first tabulate it, we can use `xtabs` and an R formula to do that. The response variable would be our count of survivors. Make sure that the variable of interest is in the rows of the resulting table (Hint: change the order of the explanatory variables in the formula and see what happens).
+
+```{r, chi-2, exercise=TRUE, exercise.setup="prep-data"}
+tab_titanic <- xtabs(... ~ ... + ..., data = ...)
+tab_titanic
+```
+```{r, chi-2-solution}
+tab_titanic <- xtabs(Freq ~ Sex + Class, data = titanic)
+tab_titanic
+```
+```{r, chi-2-check}
+grade_code()
+```
+
+Now we have the table in the right format to do a $\chi^2$ test. The `rcompanion` package contains a function called `pairwiseNominalIndependence()`. Use that to assess the whether the difference in number of survivors of different classes is likely the same as others classes.
+
+```{r, chi-3, exercise=TRUE, exercise.setup="prep-data"}
+library(...)
+pairwiseNominalIndependence(..., method="fdr")
+```
+```{r, chi-3-solution}
+library(rcompanion)
+pairwiseNominalIndependence(tab_titanic, method="fdr")
+```
+
+```{r, chi-3-check}
+grade_code()
+```
+
+

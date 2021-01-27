@@ -1,0 +1,168 @@
+---
+title: "Categoric Data"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(dplyr)
+gradethis_setup()
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+```{r prepare-data}
+plant_greenness <- dplyr::transmute(PlantGrowth, green_score = round(weight, digits=0), group )
+```
+
+```{r prep-data-typed}
+plant_greenness <- dplyr::transmute(PlantGrowth, green_score = as.factor(round(weight, digits=0)), group )
+
+ranked_plant_greenness <- mutate(plant_greenness, ranked_green_score = rank(green_score))
+        
+```
+## Setting data type
+
+Inspect the data frame `plant_greenness` which shows a score of how green a plants leaves looked after some treatment. The score is made by eye and runs arbitrarily from 0 (less green) to 6 (more green) with each number representing a category of greenness.
+
+```{r type-0, exercise=TRUE, exercise.setup="prepare-data"}
+
+```
+```{r type-0-solution}
+str(plant_greenness)
+```
+```{r type-0-check}
+grade_code()
+```
+
+
+
+```{r type-2}
+quiz(
+question("Are the types set correctly?",
+         answer("Yes", message="The column `green_score` is set as numeric. These scores are categories labelled with digits"),
+         answer("No", message="The column `green_score` is set as numeric. These scores are categories labelled with digits", correct=TRUE)
+),
+question("What should the type for `green_score` be set to?",
+        answer("logical"),
+        answer("double"),
+        answer("factor", correct=TRUE),
+        answer("character"),
+        answer("numeric")
+),
+question("Is `green_score`",
+         answer("ordered", correct=TRUE),
+         answer("unordered"),
+         answer("neither, that doesn't apply.")
+         )
+)
+```
+
+
+
+Set the column types correctly. Use `transmute` from `dplyr` and the `factor` function to achieve this. Explicitly set the factor levels as `1,2,3,4,5 and 6`
+
+```{r type-3, exercise=TRUE, exercise.setup="prepare-data"}
+library(...)
+
+plant_greenness <- ...(plant_greenness, 
+                       green_score = ...(..., levels = c(...), ordered = ... ),
+                       group)
+str(...)
+```
+```{r type-3-solution}
+library(transmute)
+
+plant_greenness <- transmute(plant_greenness, 
+                       green_score = 
+                               factor(plant_greenness, levels=c("1","2","3","4","5","6"), ordered=TRUE),
+                       group)
+str(plant_greenness)
+```
+```{r type-3-check}
+grade_code()
+```
+
+## Plotting categoric data
+
+With our types set correctly we can ask R to plot the data in a meaningful way. We can make 'balloon' style plots to do this. Use `ggplot` and `geom_count()` to make a plot of `green_score` by `group`.
+
+```{r type4, exercise=TRUE, exercise.setup = "prep-data-typed"}
+library(ggplot2)
+
+ggplot(plant_greenness) + aes(..., ...) + ...()
+```
+
+```{r type4-solution}
+library(ggplot2)
+ggplot(plant_greenness) + aes(group, green_score) + geom_count()
+```
+```{r type4-check}
+grade_code()
+```
+
+```{r type5}
+question(
+        "What does the legend `n` represent?",
+        answer("The sample size", message="In other contexts `n` is used for the sample size but here it is just the number of observations of that score"),
+        answer("The number of observations of each score", correct=TRUE)
+)
+```
+
+## Linear Models on Ranked Category Data
+
+With the data type set correctly and an informative plot that shows us some patterns in the data, let's go on and make the model and then do the hypothesis tests with an ANOVA on a ranked version of the `green_score` column. We can use the `dplyr` `mutate` function to add this to the `plant_greenness` data frame to make a new one. Do this and view the data frame.
+
+```{r type6, exercise=TRUE, exercise.setup="prep-data-typed"}
+library(...)
+ranked_plant_greenness <- mutate(..., ranked_green_score = ...(green_score))
+
+ranked_plant_greenness
+```
+
+```{r type6-solution}
+library(dplyr)
+ranked_plant_greenness <- mutate(plant_greenness, ranked_green_score = rank(green_score))
+
+ranked_plant_greenness
+```
+```{r type6-check}
+grade_code()
+```
+
+Now build the linear model, using the ranks as the response and the group as the explanatory. Perform a Tukey's _post hoc_ test to test the hypothesis that there is no difference in means between the group ranks. 
+
+```{r, type7, exercise=TRUE, exercise.setup="prep-data-typed"}
+
+rank_model <- ...
+        
+        
+library(multcomp)
+
+...
+
+```
+```{r, type7-solution}
+rank_model <- lm(ranked_green_score ~ group, data=ranked_plant_greenness)
+
+library(multcomp)
+summary(
+        glht(rank_model, linfct=mcp(group = "Tukey"))
+)
+```
+```{r, type7-check}
+grade_code()
+```
+
+Now interpret the result. 
+
+```{r, type8}
+question("At a pre-decided 0.05 $p$-value level, which are correct interpretations of the hypothesis?",
+         answer("trt1 and ctrl and trt2 are the same."),
+         answer("trt2 is significantly higher than trt1."),
+         answer("trt2 and trt1 are not likely to have the same mean rank, according to the Null Model", correct=TRUE),
+         answer("trt2 has a more significant mean rank than trt1 according to the Null Model.")
+         )
+```
