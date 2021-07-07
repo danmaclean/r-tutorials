@@ -1,0 +1,163 @@
+---
+title: "Finding structures and structural motifs using databases"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+gradethis_setup()
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Aims
+
+The aim of this tutorial is to examine how we can use public tools and databases to retrieve structures and predict the structures of our own protein of interest. We shall then work through an example in which we carry out expression estimates for the data we downloaded. 
+
+## Browsing for structural data at PDBe
+
+Protein structure databases contain data that describes the physical 3D structure of proteins that has(usually) been experimentally determined. The central archive is the Protein Data Bank and it informs the content of other specialised databases. The structural data format (.pdb) that is used is complicated and not as widely used by life scientists as the sequence formats like FASTA. 
+
+The best way to search for structural data is to use the specific tools provided at PDBe [https://www.ebi.ac.uk/pdbe/molecular-life-scientists](https://www.ebi.ac.uk/pdbe/molecular-life-scientists). A typical analysis will start with a query sequence of interest derived from earlier experiments. 
+
+We'll use a sample input protein and work through finding a structure that fits it closely. The protein is APG8A, from Arabidopsis, a Ubiquitin-like superfamily protein.
+
+```
+>protein
+MAKSSFKISNPLEARMSESSRIREKYPDRIPVIVEKA
+GQSDVPDIDKKKYLVPADLTVGQFVYVVRKRIKLGAE
+KAIFVFVKNTLPPTAALMSAIYEEHKDEDGFLYMTYS
+GENTFGSLTVA
+```
+
+Start PDBe sequence Search at [https://www.ebi.ac.uk/pdbe/molecular-life-scientists](https://www.ebi.ac.uk/pdbe/molecular-life-scientists) and in the `Advanced Search Form` select a new `FASTA sequence search` and paste the `protein` sequence above into the box that appears (be careful to not include the name). This procedure uses standard sequence similarity searches, that is to say similar amino acid sequences are used to find match to sequences that have structural data in the database. No structural data is used in the match itself. The matches that are made have sequence similarity and structural similarity is inferred. 
+
+
+```{r pdbe-1}
+question(
+  "What is the PDBe database ID of the best hit?",
+  answer("M1C146"), answer("5l83", correct = TRUE), answer("27458016")
+)
+```
+
+```{r pdbe-2}
+question(
+  "What is the actual structure that was found?",
+  answer("A potato homologue of APG8A"),
+  answer("The potato blight effector protein PexRD54"),
+  answer("The potato ATG8 protein in complex with PexRD54", correct=TRUE) 
+)
+```
+
+Click to see the 3D visualisation of the best hit. 
+
+```{r pdbe-3}
+question(
+  "How many helices can be seen in the larger of the two molecules in the dimer?",
+  answer("2", correct=TRUE), answer("3"), answer("4")
+)
+```
+```{r pdbe-4}
+question(
+  "Which amino acid is at the C terminal end of the C terminal Beta sheet?",
+  answer("Glutamine"), answer("Serine", correct=TRUE), answer("Lysine")
+)
+```
+
+
+Go back to the search results and click the download files link. View the PDB file. 
+
+```{r pdbe-5}
+question(
+  "What sort of record makes up most of the file?",
+  answer("REMARK"), answer("SITE"), answer("ATOM",correct=TRUE)
+)
+```
+
+
+Examine the Wikipedia entry for the PDB format. [https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)](https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format))
+
+```{r pdbe-6}
+question(
+  "What does the ATOM record describe?",
+  answer("the coordinates of the atoms that are part of the protein", correct=TRUE),
+  answer("the researcher who defined the structure"),
+  answer("the sequences of the peptides")
+)
+```
+
+
+## Using Phyre2 for structural analysis
+
+The Phyre2 program predicts 3 dimensional structures using homology modelling. In this approach the protein sequence of interest is used as a basis to construct a hypothetical structure model based on the atoms of the protein. Structures in that model are used to inform and improve the sequence level alignment and allow for more distant matches and matches based on the physical structure.
+
+Here is the protein sequence again.
+
+```
+>protein
+MAKSSFKISNPLEARMSESSRIREKYPDRIPVIVEKA
+GQSDVPDIDKKKYLVPADLTVGQFVYVVRKRIKLGAE
+KAIFVFVKNTLPPTAALMSAIYEEHKDEDGFLYMTYS
+GENTFGSLTVA
+```
+
+Go to the Phyre2 homepage [http://www.sbg.bio.ic.ac.uk/phyre2/html/page.cgi?id=index](http://www.sbg.bio.ic.ac.uk/phyre2/html/page.cgi?id=index) and paste the sequence in to the job page. Homology modelling takes a long time to do, so you'll need to leave an email address to retrieve the results later. A previous run can be seen at [https://danmaclean.github.io/phyreresults/](https://danmaclean.github.io/phyreresults/) (some features of the webpage won't work because it isn't on the Phyre2 server, wait for that for absolutely everything)
+
+
+```{r phyre-1}
+question(
+  "What is the percent sequence identity of the top hit (d3d32a1)?",
+  answer("100"), answer("94"), answer("57", correct=TRUE)
+)
+```
+
+The sequence identity in these models can be quite low relative to the PDBe method while the confidence in the hit can be quite high. This is because the structural feature mapping is powerful. Click the `alignment` button to see the secondary structure feature alignment.
+
+```{r phyre-2}
+question(
+  "How many predicted sheets and helices does the input query sequence have that the known structure does not?",
+  answer("0", correct=TRUE), answer("1"), answer("2")
+)
+```
+
+Download the 3D model for the best hit (d3d32a1) in PDB format from this page.
+
+## Visualising structural models of proteins
+
+Along the way we've seen numerous 3D renderings of proteins and secondary structure alignments, but we haven't seen a 3D alignment of the hits and our query protein fragment. To achieve that we need a PDB file of the hit from the database (which we downloaded in the last step). We also need a PDB file from our original protein of interest, which we don't have. We can use an _ab initio_ protein modeller to do that. These are computationally quite intensive so take a long time and require sign up, as an example there's one at [https://robetta.bakerlab.org/](https://robetta.bakerlab.org/). Go there and sign up. 
+
+When you've signed up and are on the home page, you can choose the `Submit` option from the `Structure Prediction` menu to submit a sequence for structural prediction. On that page you can see the upload boxes and some options for the modelling process. When you press the `Submit` button at the bottom, the sequence is added to the processing queue. It can take a long time to work through the sequence and build a predicted model, several hours in most cases! So don't actually run the sequence this time! Once the modelling is run the program returns a link and the PDB file to your email address. Here is a pre-computed model file for our protein of interest, [https://raw.githubusercontent.com/danmaclean/phyreresults/main/robetta_models_89846.pdb](https://raw.githubusercontent.com/danmaclean/phyreresults/main/robetta_models_89846.pdb)
+
+You can download a large text file like this most easily by using `wget` on the command-line, like this
+
+```
+wget https://raw.githubusercontent.com/danmaclean/phyreresults/main/robetta_models_89846.pdb
+```
+
+Now we have a predicted model of our protein of interest we can align it with the model of the best hit (d3d32a1). The alignment can be done with a program called TM-align at [https://zhanglab.ccmb.med.umich.edu/TM-align/](https://zhanglab.ccmb.med.umich.edu/TM-align/). The web form here is straightforward to use. Upload the model from Robetta as protein 1 and the best hit from Phyre `dda321` as protein 2. Then hit align. In a short while your alignment should appear
+
+```{r tm-align-1}
+question(
+  "Is the alignment a good one? Do the protein and the best hit match structures well?",
+  answer("Yes", correct=TRUE), answer("No")
+)
+```
+
+```{r tm-align-2}
+question(
+  "TM-score is a measure of how similar the structures are. What is the TM-score for this alignment?",
+  answer("122/155"), answer("0.87/0.92",correct=TRUE)
+)
+```
+
+```{r tm-align-3}
+question(
+  "What is TM-align's suggested upper bound on TM-score for a random alignment?",
+  answer("0.0"), answer("0.3", correct=TRUE), answer("0.5"), answer("1.0")
+)
+```
+
+## Wrap up 
+
+In this tutorial we've investigated a pipeline for finding a potential structure of a protein sequence of interest that we have no structural information about. We used sequence similarity and homology modeling to find similar known structures. We then predicted a structure _ab initio_ for our sequence of interest and used that to align in 3D space with our best match protein. In this way we have been able to infer the structure of our protein of interest.
