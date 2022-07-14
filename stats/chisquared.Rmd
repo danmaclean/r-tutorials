@@ -8,6 +8,7 @@ runtime: shiny_prerendered
 library(learnr)
 library(gradethis)
 library(dplyr)
+library(rcompanion)
 gradethis_setup()
 knitr::opts_chunk$set(echo = FALSE)
 

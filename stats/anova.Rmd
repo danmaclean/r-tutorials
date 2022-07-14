@@ -11,6 +11,7 @@ library(palmerpenguins)
 library(dplyr)
 library(magrittr)
 library(multcomp)
+library(ggplot2)
 gradethis_setup()
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -244,3 +245,4 @@ question("Which is the best combination for maximising plant dry weight?",
          answer("John Innes 2, Formula 2")
          )
 ```
+
