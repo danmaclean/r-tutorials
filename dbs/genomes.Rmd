@@ -17,6 +17,19 @@ The aim of this tutorial is to examine how we can use public genomics databases,
 
 We will then go on to assemble and annotate a genome assembly with a basic pipeline.
 
+## Glossary
+
+- **Sequence assembly**: process of aligning and merging fragments of sequences to reconstruct longer sequences called contiguous sequences (a.k.a 'contigs'). 
+
+- **Contigs**: a contiguous sequences generated during sequence assembly.
+
+- **Scaffolds**: sets of oriented, sorted and ordered contigs. 
+
+- **Genome assembly**: representation of the complete genomic sequence of an organism. A genome assembly is the ultimate result of the sequence assembly process.
+
+NB: the terms 'contigs' and 'scaffolds' are often used interchangeably, however scaffolds contain gaps while contigs do not. 
+
+
 ## Browsing for information
 
 Let's use a combination of the GenBank/NCBI databases and the ENA to find out information and data for _Campylobacter concisus_ [https://en.wikipedia.org/wiki/Campylobacter_concisus](https://en.wikipedia.org/wiki/Campylobacter_concisus)
