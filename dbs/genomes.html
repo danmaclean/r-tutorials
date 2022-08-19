@@ -122,11 +122,20 @@ basic pipeline.</p>
 <div id="section-glossary" class="section level2">
 <h2>Glossary</h2>
 <ul>
-<li>Assembly:</li>
-<li>Contigs:</li>
-<li>CDS:</li>
-<li>Scaffolds:</li>
+<li><p><strong>Sequence assembly</strong>: process of aligning and
+merging fragments of sequences to reconstruct longer sequences called
+contiguous sequences (a.k.a ‘contigs’).</p></li>
+<li><p><strong>Contigs</strong>: a contiguous sequences generated during
+sequence assembly.</p></li>
+<li><p><strong>Scaffolds</strong>: sets of oriented, sorted and ordered
+contigs.</p></li>
+<li><p><strong>Genome assembly</strong>: representation of the complete
+genomic sequence of an organism. A genome assembly is the ultimate
+result of the sequence assembly process.</p></li>
 </ul>
+<p>NB: the terms ‘contigs’ and ‘scaffolds’ are often used
+interchangeably, however scaffolds contain gaps while contigs do
+not.</p>
 </div>
 <div id="section-browsing-for-information" class="section level2">
 <h2>Browsing for information</h2>
@@ -435,13 +444,13 @@ session$onSessionEnded(function() {
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "cc-taxid", question = structure("What is the species taxon ID for  <em>C.concisus<\u002fem>?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_772ac39", 
+"character")), answers = list(structure(list(id = "lnr_ans_cf1b896", 
     option = "11485", value = "11485", label = structure("11485", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e831c59", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_462868b", 
     option = "199", value = "199", label = structure("199", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7b31db3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f323c81", 
     option = "33237", value = "33237", label = structure("33237", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -451,7 +460,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "cc-taxid-answer", question = "cc-taxid"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 760598603.145819, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 528821800.753748, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -460,13 +469,13 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "cc-assembly-count-1", 
     question = structure("How many Assemblies are retrieved?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_59741", 
+    "character")), answers = list(structure(list(id = "lnr_ans_4c1108f", 
         option = "about 250", value = "about 250", label = structure("about 250", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b74491c", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ae0cbe5", 
         option = "about 32,000", value = "about 32,000", label = structure("about 32,000", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4b9a924", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_17e58d0", 
         option = "about 20", value = "about 20", label = structure("about 20", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -477,20 +486,20 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "cc-assembly-count-1-answer", question = "cc-assembly-count-1"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = FALSE, 
-    seed = 825539883.115578, options = list()), class = c("learnr_radio", 
+    seed = 268625810.874911, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "cc-assembly-count-2", 
     question = structure("What is the genome length of the assembly with Accession <code>GCA_015679965<\u002fcode>?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_516c253", 
+    "character")), answers = list(structure(list(id = "lnr_ans_fe3c79d", 
         option = "1861371 Mbp", value = "1861371 Mbp", label = structure("1861371 Mbp", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c0f8fb", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8a6b248", 
         option = "15679965 bp", value = "15679965 bp", label = structure("15679965 bp", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e03288e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_34259d9", 
         option = "approximately 1.8 Mbp", value = "approximately 1.8 Mbp", 
         label = structure("approximately 1.8 Mbp", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -502,7 +511,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "cc-assembly-count-2-answer", question = "cc-assembly-count-2"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = FALSE, 
-    seed = 1832390334.14673, options = list()), class = c("learnr_radio", 
+    seed = 1075226438.49931, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -510,13 +519,13 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "cc-assembly-count-3", 
     question = structure("What parent ENA study did this assembly come from?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_7519178", 
+    "character")), answers = list(structure(list(id = "lnr_ans_55c520f", 
         option = "SAMN05908145", value = "SAMN05908145", label = structure("SAMN05908145", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ec09286", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8d8ac27", 
         option = "PRJNA348396", value = "PRJNA348396", label = structure("PRJNA348396", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7297ec", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_78ddd79", 
         option = "GCA_015679965.1", value = "GCA_015679965.1", 
         label = structure("GCA_015679965.1", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -528,21 +537,21 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "cc-assembly-count-3-answer", question = "cc-assembly-count-3"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = FALSE, 
-    seed = 703137267.172576, options = list()), class = c("learnr_radio", 
+    seed = 1016182962.5268, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "cc-run-count-1", 
     question = structure("What sort of sequencing was performed for the experiment?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_10fe5e0", 
+    "character")), answers = list(structure(list(id = "lnr_ans_70e104a", 
         option = "Illumina Paired End", value = "Illumina Paired End", 
         label = structure("Illumina Paired End", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2aff89e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4602677", 
         option = "Sanger", value = "Sanger", label = structure("Sanger", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f68f0e7", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3559e65", 
         option = "PacBio", value = "PacBio", label = structure("PacBio", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -553,7 +562,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "cc-run-count-1-answer", question = "cc-run-count-1"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = FALSE, 
-    seed = 840138977.60878, options = list()), class = c("learnr_radio", 
+    seed = 810564238.622552, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -561,13 +570,13 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "cc-run-count-2", 
     question = structure("How many runs appear to have gone into the assembly?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_7c73f01", 
+    "character")), answers = list(structure(list(id = "lnr_ans_879ecc2", 
         option = "5", value = "5", label = structure("5", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_52ab537", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a18841d", 
         option = "199", value = "199", label = structure("199", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2c14e19", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_84c6137", 
         option = "27", value = "27", label = structure("27", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -578,19 +587,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "cc-run-count-2-answer", question = "cc-run-count-2"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = FALSE, 
-    seed = 883455236.588609, options = list()), class = c("learnr_radio", 
+    seed = 821853456.617295, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "dload-1", question = structure("How many reads were downloaded?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_19e38b9", 
+"character")), answers = list(structure(list(id = "lnr_ans_9cfa226", 
     option = "399", value = "399", label = structure("399", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3d6531a", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_24bb6db", 
     option = "428", value = "428", label = structure("428", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b642912", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b710aea", 
     option = "399,928", value = "399,928", label = structure("399,928", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -600,7 +609,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "dload-1-answer", question = "dload-1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 1957481291.08848, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1560988682.77311, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -608,13 +617,13 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "dload-2", question = structure("How many files were downloaded?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_7fc35bf", 
+"character")), answers = list(structure(list(id = "lnr_ans_6ad4b4d", 
     option = "1", value = "1", label = structure("1", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e533625", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ff60ab1", 
     option = "2", value = "2", label = structure("2", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4c38fff", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9798907", 
     option = "399,928", value = "399,928", label = structure("399,928", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -624,20 +633,20 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "dload-2-answer", question = "dload-2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 1834057494.64595, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1016134561.52683, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "dload-3", question = structure("How much (data in Megabytes) was downloaded?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_36cf2f6", 
+"character")), answers = list(structure(list(id = "lnr_ans_1d8d89c", 
     option = "224", value = "224", label = structure("224", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8578cdd", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b688630", 
     option = "428", value = "428", label = structure("428", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cfc4efd", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9841dec", 
     option = "399,928", value = "399,928", label = structure("399,928", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -647,7 +656,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "dload-3-answer", question = "dload-3"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 1006015299.53154, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 82322789.9616655, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -655,13 +664,13 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "assemble-1", question = structure("How many scaffolds were the reads assembled into", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_c7e7eb7", 
+"character")), answers = list(structure(list(id = "lnr_ans_60c3e7c", 
     option = "39", value = "39", label = structure("39", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_49096e5", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cb2210e", 
     option = "42", value = "42", label = structure("42", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_df87c9e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a97acea", 
     option = "about 65", value = "about 65", label = structure("about 65", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -671,20 +680,20 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "assemble-1-answer", question = "assemble-1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 2040856922.54965, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1224373871.92986, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "annot-1", question = structure("How many protein Coding Sequences were found?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_decf963", 
+"character")), answers = list(structure(list(id = "lnr_ans_1be366b", 
     option = "1905", value = "1905", label = structure("1905", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_23518c9", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_22e68fc", 
     option = "68", value = "68", label = structure("68", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_61d9bcd", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_419838b", 
     option = "38", value = 38, label = structure("38", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -694,7 +703,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "annot-1-answer", question = "annot-1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 487766088.272866, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1141590863.96841, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -702,13 +711,13 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "busco-1", question = structure("How many BUSCOs (conserved genes) did the program expect to find?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_a8e495d", 
+"character")), answers = list(structure(list(id = "lnr_ans_1f4f656", 
     option = "531", value = "531", label = structure("531", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5051500", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_71574ef", 
     option = "59", value = "59", label = structure("59", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5ee7aca", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2f3de79", 
     option = "591", value = "591", label = structure("591", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -718,20 +727,20 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "busco-1-answer", question = "busco-1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 736684088.156955, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 2079442876.53168, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "busco-2", question = structure("How many BUSCOs (conserved genes) did the program actually find?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_4167650", 
+"character")), answers = list(structure(list(id = "lnr_ans_8288640", 
     option = "531", value = "531", label = structure("531", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f256dc3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_55f3343", 
     option = "59", value = "59", label = structure("59", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c9dc0d7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e78c45", 
     option = "591", value = "591", label = structure("591", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -741,7 +750,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "busco-2-answer", question = "busco-2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 1390382623.35255, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 848896781.604702, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -749,10 +758,10 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "busco-3", question = structure("This is a good result, right?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_fd8a5b4", 
+"character")), answers = list(structure(list(id = "lnr_ans_9c5798b", 
     option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6a0fa6c", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_482310e", 
     option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -762,7 +771,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "busco-3-answer", question = "busco-3"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 1157924919.4608, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 2137507392.50465, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
