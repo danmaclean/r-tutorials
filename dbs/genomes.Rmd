@@ -17,13 +17,26 @@ The aim of this tutorial is to examine how we can use public genomics databases,
 
 We will then go on to assemble and annotate a genome assembly with a basic pipeline.
 
+## Glossary
+
+- **Sequence assembly**: process of aligning and merging fragments of sequences to reconstruct longer sequences called contiguous sequences (a.k.a 'contigs'). 
+
+- **Contigs**: a contiguous sequences generated during sequence assembly.
+
+- **Scaffolds**: sets of oriented, sorted and ordered contigs. 
+
+- **Genome assembly**: representation of the complete genomic sequence of an organism. A genome assembly is the ultimate result of the sequence assembly process.
+
+NB: the terms 'contigs' and 'scaffolds' are often used interchangeably, however scaffolds contain gaps while contigs do not. 
+
+
 ## Browsing for information
 
 Let's use a combination of the GenBank/NCBI databases and the ENA to find out information and data for _Campylobacter concisus_ [https://en.wikipedia.org/wiki/Campylobacter_concisus](https://en.wikipedia.org/wiki/Campylobacter_concisus)
 
-We'll first make sure we know exactly which organism we are talking about and learn how the databases identify species. Each taxon known to science has a unique ID at the NCBI Taxonomy Database [https://www.ncbi.nlm.nih.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)
+We'll first make sure we know exactly which organism we are talking about and learn how the databases identify species. Each taxon known to science has a unique ID number at the NCBI Taxonomy Database [https://www.ncbi.nlm.nih.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy). This unique ID number is the "taxonomic identifier' (a.k.a 'taxon ID', 'tax ID' or 'taxid').
 
-Use the NCBI Taxonomy Browser to find the taxon id for _C.concisus_
+Use the NCBI Taxonomy Browser to find the taxon ID for _C. concisus_
 
 ```{r cc-taxid}
 question(
@@ -32,9 +45,9 @@ question(
 )
 ```
 
-Once we know how the databases refer to the species we are interested in uniquely, we can find data for that species uniquely and accurately.
+Once we know how the databases refer to the exact species we are interested in, we can find data for that species uniquely and accurately.
 
-Use the taxid as input at ENA to find assemblies. Assemblies are the result of combining sequence reads in order to get a whole genome sequence. For bacteria the process can often result in a complete, unfragmented genome sequence. We will search ENA for _C.concisus_ genome assemblies.
+Use the taxid as input at ENA to find assemblies. Assemblies are the result of combining sequence reads in order to get a whole genome sequence. For bacteria the process can often result in a complete, unfragmented genome sequence. We will search ENA for _C. concisus_ genome assemblies.
 
 Use the `Query Builder` [https://www.ebi.ac.uk/ebisearch/querybuilder.ebi](https://www.ebi.ac.uk/ebisearch/querybuilder.ebi) to build a query that will: 
 
@@ -87,11 +100,11 @@ question(
 
 ## Downloading data with SRAtools
 
-The web page provides a download button for the data, and while for this small genome with small files (relatively speaking) downloading through the browser might work, we can do this better using the `SRAtools` package on the command-line.
+The web page provides a download button for the data, and while for this small genome with small files (relatively speaking) downloading through the browser might work, we can do this better using the `SRAtools` package on the command-line. The `SRAtools` helps downloading data from the Sequence Nucleotide Archive, a primary database like the ENA. 
 
 Start up your terminal program. We can use the `SRAtools` package to retrieve data in one steps. We use the `fastqdump` command to prepare the data and download it to an uncompressed text file in fastq format. Note that often you will not want uncompressed data as raw read data can be very large. You can check the SRAtools manuals for more flexible download options [here](https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/#download-sequence-data-files-usi)
 
-Download the reads for just one run - with ID `SRR4434294` as follows:
+Download the reads for just one run - with ID `SRR4434292` as follows:
 
 ```
 fastq-dump SRR4434292
