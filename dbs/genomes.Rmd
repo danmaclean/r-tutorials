@@ -121,7 +121,7 @@ question(
 ```{r dload-2}
 question(
   "How many files were downloaded?",
-  answer("1"), answer("2",correct=TRUE), answer("399,928")
+  answer("1",correct=TRUE), answer("2"), answer("399,928")
 )
 ```
 
