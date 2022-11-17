@@ -128,7 +128,7 @@ question(
 ```{r dload-3}
 question(
   "How much (data in Megabytes) was downloaded?",
-  answer("224",correct=TRUE), answer("428"), answer("399,928")
+  answer("about 200",correct=TRUE), answer("about 400"), answer("399,928")
 )
 
 
