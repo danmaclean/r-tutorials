@@ -191,7 +191,7 @@ kallisto quant -i ecoli_index.idx -o 14h -b 100 --single -l 180 -s 20 SRR3144643
 The transcript abundances are placed in the output folder inside a file called `abundances.tsv`. Check it like this (remembering to use `q` to quit `less`)
 
 ```
-less 8h/abundances.tsv
+head 8h/abundance.tsv
 ```
 
 part of which looks like this
