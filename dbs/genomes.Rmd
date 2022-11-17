@@ -149,7 +149,7 @@ The command line specifies that we should run `SPAdes` using the assembler parts
 Run the command line and be prepared to wait. It takes about 10 minutes to complete. When it does, check the number of assembled scaffolds using the `count (-c)` facility of `grep`.
 
 ```
-grep -c `test_assembly/scaffolds.fasta`
+grep -c '>' test_assembly/scaffolds.fasta
 ```
 
 
@@ -168,6 +168,12 @@ Running `prokka` in basic mode goes like this - just give it the `scaffold.fasta
 
 ```
 prokka test_assembly/scaffolds.fasta
+```
+
+If it complains about ID lengths, try this variant.
+
+```
+prokka --centre X --compliant test_assembly/scaffolds.fasta 
 ```
 
 After about 5 minutes it will report it is finished. A timestamped set of files in a timestamped folder will be created, e.g `PROKKA_06242021/PROKKA_06242021.txt`. 
